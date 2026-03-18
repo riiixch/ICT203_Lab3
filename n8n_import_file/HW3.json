@@ -1,0 +1,450 @@
+{
+  "name": "HW3",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "data",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ce96ed4b-d10e-4164-af60-c9fa36c0250d",
+      "name": "Webhook",
+      "webhookId": "13d8b96c-8ce5-45f9-8e87-0e97185c713c"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1oqQGHuu9CCfMy8zCBpyBAdbLzIzVqjS6VP8tk8MbCVI",
+          "mode": "list",
+          "cachedResultName": "n8n_lab3",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1oqQGHuu9CCfMy8zCBpyBAdbLzIzVqjS6VP8tk8MbCVI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "ชีต1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1oqQGHuu9CCfMy8zCBpyBAdbLzIzVqjS6VP8tk8MbCVI/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "6dba93ef-b4cc-4589-a0e5-bfb95126249e",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vaDztqYMVv16UgWH",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d69194a7-0132-4edc-9138-c6ea456d825e",
+              "name": "fname",
+              "value": "={{ $json[\"ชื่อจริง\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "fae9bc44-9aa1-4e07-955f-7b88972ba73d",
+              "name": "lname",
+              "value": "={{ $json[\"นามสกุล\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "ed160b65-4f01-4abf-b867-dd28c405b0cc",
+              "name": "email",
+              "value": "={{ $json[\"อีเมล\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "42f06a66-17e4-41db-8b58-74bbdd60fd15",
+              "name": "telephone",
+              "value": "={{ $json[\"เบอร์โทรศัพท์\"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "524e5140-9130-4c38-9bdc-2565f3bdbfff",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "data",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        352
+      ],
+      "id": "3015bc5c-782b-42bb-ab55-2cbad6b48789",
+      "name": "Webhook1",
+      "webhookId": "4aa37ac3-113c-44c3-9a2b-d17b6e06dd98"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        624,
+        0
+      ],
+      "id": "98efe3a4-521d-4366-81b9-c0a86ace6ab4",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5a36e097-7ce4-447d-94fe-5b866b59c4f7",
+              "name": "fname",
+              "value": "={{ $json.body.fname }}",
+              "type": "string"
+            },
+            {
+              "id": "1360f20a-6e40-4b58-960d-b7be897a9fbb",
+              "name": "lname",
+              "value": "={{ $json.body.lname }}",
+              "type": "string"
+            },
+            {
+              "id": "d99780cc-1b2c-44ca-a34f-719676a75902",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "8ac175d0-c773-411b-85e9-6c57bbe6e596",
+              "name": "phone",
+              "value": "={{ $json.body.phone }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        352
+      ],
+      "id": "9f7a16b9-3046-4a35-89af-eea024e52106",
+      "name": "Edit Fields1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "57739870-053d-46d7-bb27-8d5eeb9a8e40",
+              "leftValue": "={{ $json.fname }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "3e74dc93-838b-4306-826c-2d5f65166b02",
+              "leftValue": "={{ $json.lname }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "b2b206fe-4483-4a01-ba78-1b84f84d33e8",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "7879961d-170c-40a9-ae47-6c6c97f58c4c",
+              "leftValue": "={{ $json.phone }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        352
+      ],
+      "id": "d9c51514-826d-4f8f-a4ad-5ecbcfa19707",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1oqQGHuu9CCfMy8zCBpyBAdbLzIzVqjS6VP8tk8MbCVI",
+          "mode": "list",
+          "cachedResultName": "n8n_lab3",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1oqQGHuu9CCfMy8zCBpyBAdbLzIzVqjS6VP8tk8MbCVI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "ชีต1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1oqQGHuu9CCfMy8zCBpyBAdbLzIzVqjS6VP8tk8MbCVI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ชื่อจริง": "={{ $json.fname }}",
+            "นามสกุล": "={{ $json.lname }}",
+            "อีเมล": "={{ $json.email }}",
+            "เบอร์โทรศัพท์": "={{ $json.phone }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ชื่อจริง",
+              "displayName": "ชื่อจริง",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "นามสกุล",
+              "displayName": "นามสกุล",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "อีเมล",
+              "displayName": "อีเมล",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "เบอร์โทรศัพท์",
+              "displayName": "เบอร์โทรศัพท์",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        624,
+        256
+      ],
+      "id": "d013a4d0-b38b-43b6-b8c4-b435650a1080",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vaDztqYMVv16UgWH",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"msg\": \"กรุณากรอกข้อมูลให้ครบถ้วน\"\n}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        624,
+        448
+      ],
+      "id": "27a8fa63-2917-40bc-871b-9b7cd11d2ee6",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"msg\": \"ข้อมูลถูกบันทึกแล้ว\"\n}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        816,
+        256
+      ],
+      "id": "e2113b90-19da-4894-9cdc-c15d824a14da",
+      "name": "Respond to Webhook2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "26d8d429-980c-48a5-8e81-82a05240291e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e1c82bde400695567d0d16630652537710952a3ae132d7f2a8e0f6d8a3f2bc0d"
+  },
+  "id": "nJxuucYnMQULDLeM",
+  "tags": []
+}
